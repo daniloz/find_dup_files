@@ -9,11 +9,11 @@ import md5
 import traceback
 
 
-def list_duplicates():
+def list_duplicates(size=1024*1024):
     db = Storage(memory = False, filename = "files.db")
     db.create_indices()
-    for row in db.duplicates(1024 * 1024):
+    for row in db.duplicates(size):
         print dict(row)
 
 if __name__ == "__main__":
-    list_duplicates()
+    list_duplicates(0)
