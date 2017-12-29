@@ -115,6 +115,8 @@ class FindFiles:
                 dirs.remove('.git')
             if '.svn' in dirs:
                 dirs.remove('.svn')
+            if '@eaDir' in dirs:
+                dirs.remove('@eaDir')
 
             for fna in files:
                 VISIT_LOG.write(("%s/%s\n" % (root, fna)))
