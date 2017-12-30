@@ -10,6 +10,7 @@ import socket
 import logging
 from crc32 import crc32
 
+from progress import progress
 from storage import Storage
 
 TIMESTMP_FMT = ("%H:%M:%S") # no %f for msecs
@@ -110,6 +111,8 @@ class FindFiles:
         """
         Search folder
         """
+        # Get all files
+        file_names = []
         for root, dirs, files in os.walk(path):
             if '.git' in dirs:
                 dirs.remove('.git')
@@ -119,9 +122,15 @@ class FindFiles:
                 dirs.remove('@eaDir')
 
             for fna in files:
-                VISIT_LOG.write(("%s/%s\n" % (root, fna)))
                 full_name = os.path.join(root, fna)
-                self.visit(full_name)
+                file_names.append(full_name)
+        
+        nb_files = len(file_names)
+        for cnt in range(0, nb_files):
+            progress(cnt+1, nb_files, status=("Searching %s" % path), percent=False)
+            full_name = file_names[cnt]
+            VISIT_LOG.write(("%s\n" % full_name))            
+            self.visit(full_name)
 
         # TODO return PROBLEM_FILES
 
