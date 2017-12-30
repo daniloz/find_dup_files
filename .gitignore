@@ -1,1 +1,4 @@
+visit.log
 *.pyc
+*.db
+
