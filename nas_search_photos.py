@@ -16,20 +16,21 @@ def print_duplicates(dbs):
 
 if __name__ == "__main__":
 
-    if len(sys.argv) < 2:
+    nargs = len(sys.argv)
+    if nargs < 2:
         print "I need the path to work..."
         sys.exit(1)
     
-    path = sys.argv[1]
-    print "Searching for duplicate files in %s" % path
-
     DB2 = Storage(memory=False)
     DB2.recreate() # TODO
 
     __ITER__ = FindFiles(DB2)
 
     DB2.begin_adding_files()
-    PROBLEM_FILES = __ITER__.search(path)
+    for i in range(1,nargs):
+        path = sys.argv[i]
+        PROBLEM_FILES = __ITER__.search(path)
+        print ""
     DB2.done_adding_files()
 
     print "\nduplicate keys:"
